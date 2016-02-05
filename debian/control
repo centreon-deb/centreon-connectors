@@ -1,0 +1,24 @@
+Source: centreon-connectors
+Section: net
+Priority: extra
+Maintainer: Sébastien Gross <seb-ppa@chezwam.org>
+Build-Depends: debhelper (>= 7.0.50), libcentreon-clib-dev, libperl-dev
+Standards-Version: 3.9.5
+Homepage: https://www.centreon.com/en/products/centreon/centreon-engine/
+Vcs-Browser: https://github.com/centreon/centreon-engine
+Vcs-Git: https://github.com/centreon/centreon-engine.git
+
+Package: centreon-connectors
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, adduser
+Description: centreon-engine polling process with specialized daemons
+ Centreon Connectors are extremely fast open-source monitoring check
+ execution daemons designed to work with Centreon Engine. It is a low-level
+ component of the Centreon software suite.
+ .
+ There are currently two open-source connectors :
+ .
+ * Centreon Connector Perl: persistent Perl interpreter that executes Perl
+   plugins very fast.
+ * Centreon Connector SSH: maintain SSH connexions opened to reduce overhead
+   of plugin execution over SSH.

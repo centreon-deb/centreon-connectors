@@ -1,0 +1,62 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+PACKAGE=centreon-connectors
+PACKAGEDIR=debian/$(PACKAGE)
+
+CONNECTORS=ssh perl
+
+# Uncomment this to turn on verbose mode.
+export DH_VERBOSE=1
+
+# to run with quilt use this instead:
+# dh  --with quilt $@
+
+%:
+	dh $@
+
+override_dh_auto_configure:
+	for c in $(CONNECTORS); do \
+		dh_auto_configure $@ --builddirectory=$$c --sourcedirectory=$$c/build; \
+	done
+
+override_dh_auto_build:
+	for c in $(CONNECTORS); do \
+		dh_auto_build $@ --builddirectory=$$c --sourcedirectory=$$c/build; \
+	done
+
+override_dh_auto_install:
+
+
+# 	for c in $(CONNECTORS); do \
+# 		dh_auto_install $@ \
+# 			--destdir=$(PACKAGEDIR)-$$c \
+# 			--builddirectory=$$c \
+# 			--sourcedirectory=$$c/build; \
+# 	done
+
+override_dh_auto_clean:
+	for c in $(CONNECTORS); do \
+		dh_auto_clean $@ --sourcedirectory=$$c/build; \
+	done
+
+override_dh_clean:
+	#TODO: find a better way to do that
+	dh_clean $@ \
+		perl/src/xs_init.cc \
+		perl/CMakeCache.txt \
+		perl/Makefile \
+		perl/cmake_install.cmake \
+		perl/install_manifest.txt \
+	        perl/centreon_connector_perl \
+	        perl/libcentreonconnectorperl.a \
+		ssh/CMakeCache.txt \
+		ssh/Makefile \
+		ssh/cmake_install.cmake \
+		ssh/install_manifest.txt \
+	        ssh/centreon_connector_ssh \
+	        ssh/libcentreonconnectorssh.a 
+
+	rm -rf \
+		ssh/CMakeFiles \
+		perl/CMakeFiles \

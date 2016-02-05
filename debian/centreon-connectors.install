@@ -1,0 +1,2 @@
+perl/centreon_connector_perl usr/lib/centreon-connector
+ssh/centreon_connector_ssh usr/lib/centreon-connector
